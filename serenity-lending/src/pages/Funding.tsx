@@ -165,7 +165,7 @@ export function Funding() {
                   </div>
                   <div>
                     <div className="text-xs uppercase tracking-widest text-terracotta font-bold mb-1">Call Us</div>
-                    <div className="text-xl font-playfair font-bold text-linen-cream">(555) 123-4567</div>
+                    <div className="text-xl font-playfair font-bold text-linen-cream">(404) 433-5331</div>
                   </div>
                 </div>
               </div>
