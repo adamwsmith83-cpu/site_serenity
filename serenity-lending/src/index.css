@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Instrument+Serif:ital,wght@0,400;1,400&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-sage-forest: #567a68;
+  --color-linen-cream: #f5ede0;
+  --color-terracotta: #b05a3a;
+  --color-dusty-rose: #dbb8a8;
+  --color-warm-khaki: #a8844a;
+
+  --font-playfair: "Playfair Display", serif;
+  --font-dm-sans: "DM Sans", sans-serif;
+  --font-instrument: "Instrument Serif", serif;
+}
+
+@layer base {
+  body {
+    @apply font-dm-sans bg-linen-cream text-sage-forest;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-playfair;
+  }
+}
+
+.clip-diagonal {
+  clip-path: polygon(0 0, 100% 5%, 100% 100%, 0 95%);
+}
+
+.clip-diagonal-reverse {
+  clip-path: polygon(0 5%, 100% 0, 100% 95%, 0 100%);
+}
+
+.clip-panel {
+  clip-path: polygon(0 0, 100% 0, 95% 100%, 0 100%);
+}
