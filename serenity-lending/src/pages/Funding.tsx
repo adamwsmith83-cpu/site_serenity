@@ -14,17 +14,46 @@ export function Funding() {
   });
 
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.disclaimer) {
       return;
     }
-    // Simulate API call
-    setIsSubmitted(true);
-    setFormData({
-      name: '', email: '', phone: '', loanType: 'fix-and-flip', closingDate: '', message: '', disclaimer: false
-    });
+    
+    setIsSubmitting(true);
+    setError(null);
+
+    try {
+      const formspreeId = import.meta.env.VITE_FORMSPREE_ID || 'mgonkapb';
+      
+      const response = await fetch(`https://formspree.io/f/${formspreeId}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+            ...formData,
+            _subject: `New Funding Request from ${formData.name}`
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to submit form. Please try again later.');
+        }
+
+        setIsSubmitted(true);
+        setFormData({
+          name: '', email: '', phone: '', loanType: 'fix-and-flip', closingDate: '', message: '', disclaimer: false
+        });
+      } catch (err) {
+      setError(err instanceof Error ? err.message : 'An unexpected error occurred.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   useEffect(() => {
@@ -229,8 +258,18 @@ export function Funding() {
                   <CheckCircle2 size={10} /> Secure Submission via Serenity Protocol
                 </div>
 
-                <button type="submit" className="w-full bg-terracotta text-linen-cream py-5 font-dm-sans font-bold uppercase tracking-widest hover:bg-white/20 transition-all duration-500">
-                  Submit Funding Request
+                {error && (
+                  <div className="bg-red-500/10 border border-red-500/20 text-red-400 p-4 text-xs mb-6 font-dm-sans">
+                    {error}
+                  </div>
+                )}
+
+                <button 
+                  type="submit" 
+                  disabled={isSubmitting}
+                  className="w-full bg-terracotta text-linen-cream py-5 font-dm-sans font-bold uppercase tracking-widest hover:bg-white/20 transition-all duration-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {isSubmitting ? 'Processing Request...' : 'Submit Funding Request'}
                 </button>
               </form>
             </div>
