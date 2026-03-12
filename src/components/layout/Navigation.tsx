@@ -42,7 +42,7 @@ export function Navigation({ navLinks }: NavigationProps) {
             )
           ))}
           <div className="flex items-center gap-4 ml-6">
-            <Link to="/funding" className="bg-terracotta text-linen-cream px-6 py-3 hover:bg-white/10 transition-all duration-500 font-dm-sans normal-case tracking-normal font-medium">
+            <Link to="/funding" className="bg-sage-forest text-linen-cream px-6 py-3 hover:bg-white/10 transition-all duration-500 font-dm-sans normal-case tracking-normal font-medium">
               Fund Your Next Deal
             </Link>
           </div>
@@ -68,7 +68,7 @@ export function Navigation({ navLinks }: NavigationProps) {
               </Link>
             )
           ))}
-          <Link to="/funding" onClick={() => setIsMenuOpen(false)} className="bg-terracotta text-linen-cream py-4 text-center normal-case tracking-normal font-medium">
+          <Link to="/funding" onClick={() => setIsMenuOpen(false)} className="bg-sage-forest text-linen-cream py-4 text-center normal-case tracking-normal font-medium">
             Fund Your Next Deal
           </Link>
         </div>

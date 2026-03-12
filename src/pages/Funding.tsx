@@ -63,8 +63,8 @@ export function Funding() {
   if (isSubmitted) {
     return (
       <div className="pt-20 min-h-screen bg-transparent flex items-center justify-center px-6">
-        <div className="max-w-md w-full bg-black/40 backdrop-blur-xl p-12 text-center shadow-2xl border-t-4 border-terracotta clip-panel text-linen-cream">
-          <div className="w-20 h-20 bg-terracotta text-linen-cream flex items-center justify-center rounded-full mx-auto mb-8">
+        <div className="max-w-md w-full bg-black/40 backdrop-blur-xl p-12 text-center shadow-2xl border-t-4 border-sage-forest clip-panel text-linen-cream">
+          <div className="w-20 h-20 bg-sage-forest text-linen-cream flex items-center justify-center rounded-full mx-auto mb-8">
             <CheckCircle2 size={40} />
           </div>
           <h2 className="text-4xl font-playfair font-bold mb-4">Request Received</h2>
@@ -73,7 +73,7 @@ export function Funding() {
           </p>
           <button 
             onClick={() => setIsSubmitted(false)}
-            className="text-terracotta font-bold uppercase tracking-widest hover:text-linen-cream transition-colors"
+            className="text-sage-forest font-bold uppercase tracking-widest hover:text-linen-cream transition-colors"
           >
             Submit Another Request
           </button>
@@ -267,7 +267,7 @@ export function Funding() {
                 <button 
                   type="submit" 
                   disabled={isSubmitting}
-                  className="w-full bg-terracotta text-linen-cream py-5 font-dm-sans font-bold uppercase tracking-widest hover:bg-white/20 transition-all duration-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full bg-sage-forest text-linen-cream py-5 font-dm-sans font-bold uppercase tracking-widest hover:bg-terracotta transition-all duration-500 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isSubmitting ? 'Processing Request...' : 'Submit Funding Request'}
                 </button>

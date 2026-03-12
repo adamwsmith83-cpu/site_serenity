@@ -16,7 +16,7 @@ export function Hero() {
           We provide a range of creative funding options for almost any type of deal.
         </p>
         <div className="flex gap-6 items-center">
-          <Link to="/funding" className="bg-terracotta text-linen-cream px-10 py-5 font-medium text-lg hover:bg-sage-forest transition-all duration-500 shadow-xl">
+          <Link to="/funding" className="bg-sage-forest text-linen-cream px-10 py-5 font-medium text-lg hover:bg-terracotta transition-all duration-500 shadow-xl">
             Fund Your Next Deal
           </Link>
           <a href="#programs" className="font-instrument italic text-xl text-linen-cream hover:text-terracotta transition-colors flex items-center gap-2">
