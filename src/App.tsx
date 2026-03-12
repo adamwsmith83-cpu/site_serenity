@@ -26,7 +26,7 @@ export default function App() {
           <img 
             src="/assets/background.png" 
             alt="" 
-            className="absolute inset-0 w-full h-full object-cover opacity-20 grayscale"
+            className="absolute inset-0 w-full h-full object-contain opacity-20 grayscale"
             referrerPolicy="no-referrer"
             onError={(e) => {
               e.currentTarget.src = "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop";
@@ -47,7 +47,7 @@ export default function App() {
           <img 
             src="/assets/overlay.svg" 
             alt="" 
-            className="absolute inset-0 w-full h-full object-cover opacity-10 pointer-events-none"
+            className="absolute inset-0 w-full h-full object-contain opacity-10 pointer-events-none"
             referrerPolicy="no-referrer"
             onError={(e) => {
               e.currentTarget.style.display = 'none';
