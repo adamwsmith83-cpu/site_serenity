@@ -14,11 +14,8 @@ import { Funding } from './pages/Funding';
 export default function App() {
   const { scrollYProgress } = useScroll();
   
-  // The background images are 4096px tall. 
-  // To ensure the user sees the entire height from top to bottom as they scroll the page,
-  // we map the scroll progress to the difference between viewport height and image height.
-  // We use a large fixed height for the container to match the asset's scale.
-  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0px", "calc(100vh - 4096px)"]);
+  // Subtle parallax for the background
+  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
 
   const navLinks = [
     { name: 'Programs', href: '#programs' },
@@ -36,8 +33,13 @@ export default function App() {
         {/* Parallax Background Layer */}
         <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none">
           <motion.div 
-            style={{ y: backgroundY }}
-            className="absolute top-0 left-0 w-full h-[4096px]"
+            style={{ 
+              y: backgroundY, 
+              willChange: 'transform',
+              transform: 'translateZ(0)',
+              backfaceVisibility: 'hidden'
+            }}
+            className="absolute -top-[10%] left-0 w-full h-[120%]"
           >
             {/* Base PNG Layer */}
             <img 
@@ -46,20 +48,25 @@ export default function App() {
               className="w-full h-full object-cover"
               referrerPolicy="no-referrer"
               onError={(e) => {
-                e.currentTarget.src = "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop";
+                e.currentTarget.src = "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?q=80&w=2070&auto=format&fit=crop";
               }}
             />
           </motion.div>
           
           {/* Optional Overlay SVG Layer */}
           <motion.div 
-            style={{ y: backgroundY }}
-            className="absolute top-0 left-0 w-full h-[4096px]"
+            style={{ 
+              y: backgroundY, 
+              willChange: 'transform',
+              transform: 'translateZ(0)',
+              backfaceVisibility: 'hidden'
+            }}
+            className="absolute -top-[10%] left-0 w-full h-[120%]"
           >
             <img 
               src="/assets/overlay.svg" 
               alt="" 
-              className="w-full h-full object-cover opacity-40 pointer-events-none"
+              className="w-full h-full object-cover opacity-30 pointer-events-none"
               referrerPolicy="no-referrer"
               onError={(e) => {
                 e.currentTarget.style.display = 'none';

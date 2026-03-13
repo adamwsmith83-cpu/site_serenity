@@ -17,7 +17,7 @@ export function Navigation({ navLinks }: NavigationProps) {
   const isHome = location.pathname === '/';
 
   return (
-    <nav className="fixed top-0 w-full bg-black/40 backdrop-blur-md z-50 border-b border-white/10">
+    <nav className="fixed top-0 w-full bg-black/80 z-50 border-b border-white/10">
       <div className="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
         <Link to="/" className="text-2xl font-playfair font-bold tracking-tight text-linen-cream flex items-center gap-3">
           <img 
