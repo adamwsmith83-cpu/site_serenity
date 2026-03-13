@@ -12,9 +12,13 @@ import { Home } from './pages/Home';
 import { Funding } from './pages/Funding';
 
 export default function App() {
-  const { scrollY } = useScroll();
-  const backgroundY = useTransform(scrollY, [0, 5000], [0, -1200]);
-  const watermarkY = useTransform(scrollY, [0, 5000], [0, -800]);
+  const { scrollYProgress } = useScroll();
+  
+  // The background is 120% of viewport height. 
+  // We move it up by the "extra" 20% over the entire scroll duration.
+  // This ensures it never scrolls past its own bounds.
+  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "-16.66%"]);
+  const watermarkY = useTransform(scrollYProgress, [0, 1], ["0%", "-10%"]);
 
   const navLinks = [
     { name: 'Programs', href: '#programs' },
