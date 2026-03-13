@@ -14,11 +14,11 @@ import { Funding } from './pages/Funding';
 export default function App() {
   const { scrollYProgress } = useScroll();
   
-  // The background is 120% of viewport height. 
-  // We move it up by the "extra" 20% over the entire scroll duration.
-  // This ensures it never scrolls past its own bounds.
-  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "-16.66%"]);
-  const watermarkY = useTransform(scrollYProgress, [0, 1], ["0%", "-10%"]);
+  // The background images are 4096px tall. 
+  // To ensure the user sees the entire height from top to bottom as they scroll the page,
+  // we map the scroll progress to the difference between viewport height and image height.
+  // We use a large fixed height for the container to match the asset's scale.
+  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0px", "calc(100vh - 4096px)"]);
 
   const navLinks = [
     { name: 'Programs', href: '#programs' },
@@ -29,17 +29,21 @@ export default function App() {
   return (
     <BrowserRouter>
       <div className="bg-[#0a0a0a] text-sage-forest font-dm-sans relative min-h-screen">
+        {/* Paper Texture Overlays */}
+        <div className="paper-texture" />
+        <div className="paper-overlay" />
+
         {/* Parallax Background Layer */}
         <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none">
           <motion.div 
             style={{ y: backgroundY }}
-            className="absolute inset-0 w-full h-[150%]"
+            className="absolute top-0 left-0 w-full h-[4096px]"
           >
             {/* Base PNG Layer */}
             <img 
               src="/assets/background.png" 
               alt="" 
-              className="w-full h-full object-cover opacity-60 grayscale"
+              className="w-full h-full object-cover"
               referrerPolicy="no-referrer"
               onError={(e) => {
                 e.currentTarget.src = "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop";
@@ -47,28 +51,15 @@ export default function App() {
             />
           </motion.div>
           
-          {/* SVG Icon Watermark Layer */}
-          <motion.div 
-            style={{ y: watermarkY }}
-            className="absolute inset-0 flex items-center justify-center opacity-[0.08]"
-          >
-            <img 
-              src="/assets/serenity_icon.svg" 
-              alt="" 
-              className="w-[800px] h-[800px] rotate-12"
-              referrerPolicy="no-referrer"
-            />
-          </motion.div>
-
           {/* Optional Overlay SVG Layer */}
           <motion.div 
             style={{ y: backgroundY }}
-            className="absolute inset-0 w-full h-[150%]"
+            className="absolute top-0 left-0 w-full h-[4096px]"
           >
             <img 
               src="/assets/overlay.svg" 
               alt="" 
-              className="w-full h-full object-cover opacity-30 pointer-events-none"
+              className="w-full h-full object-cover opacity-40 pointer-events-none"
               referrerPolicy="no-referrer"
               onError={(e) => {
                 e.currentTarget.style.display = 'none';

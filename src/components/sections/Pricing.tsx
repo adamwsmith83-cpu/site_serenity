@@ -24,16 +24,16 @@ export function Pricing() {
           <div className="h-px w-24 bg-terracotta mx-auto" />
         </div>
         
-        <div className="grid md:grid-cols-2 gap-12 max-w-3xl mx-auto">
+        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           {pricingOptions.map((p, i) => (
-            <div key={i} className="relative">
-              <div className="text-7xl font-playfair font-bold text-terracotta/5 absolute -top-10 -left-4">0{i+1}</div>
-              <h3 className="text-2xl font-playfair font-bold mb-4 text-linen-cream">{p.title}</h3>
+            <div key={i} className="relative bg-linen-cream p-10 clip-panel shadow-xl border-l border-terracotta/20">
+              <div className="text-7xl font-playfair font-bold text-terracotta/5 absolute -top-6 -left-2">0{i+1}</div>
+              <h3 className="text-2xl font-playfair font-bold mb-4 text-sage-forest">{p.title}</h3>
               <div className="text-4xl font-playfair font-bold text-terracotta mb-6">
                 <span className="text-xs uppercase tracking-widest block mb-1 opacity-60">Starting from</span>
                 {p.fee}
               </div>
-              <p className="text-linen-cream/70 text-sm leading-relaxed mb-8">{p.desc}</p>
+              <p className="text-sage-forest/70 text-sm leading-relaxed mb-8">{p.desc}</p>
               <div className="h-px w-full bg-terracotta/10" />
             </div>
           ))}

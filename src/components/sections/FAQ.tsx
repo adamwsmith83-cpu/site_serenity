@@ -45,11 +45,11 @@ export function FAQ() {
           <h2 className="text-5xl font-playfair font-bold text-linen-cream">Clarity in the details.</h2>
         </div>
         
-        <div className="grid md:grid-cols-2 gap-x-16 gap-y-8">
+        <div className="grid md:grid-cols-2 gap-6">
           {faqs.map((faq, i) => (
-            <div key={i} className="group">
-              <h3 className="text-lg font-playfair font-bold mb-3 text-linen-cream group-hover:text-terracotta transition-colors">{faq.q}</h3>
-              <p className="text-linen-cream/60 leading-relaxed text-sm">{faq.a}</p>
+            <div key={i} className="group bg-linen-cream p-8 clip-panel shadow-lg border-l border-terracotta/20">
+              <h3 className="text-lg font-playfair font-bold mb-3 text-sage-forest group-hover:text-terracotta transition-colors">{faq.q}</h3>
+              <p className="text-sage-forest/70 leading-relaxed text-sm">{faq.a}</p>
               <div className="h-px w-8 bg-terracotta/20 mt-4 group-hover:w-full transition-all duration-700" />
             </div>
           ))}

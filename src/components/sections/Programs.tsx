@@ -39,10 +39,10 @@ export function Programs() {
         
         <div className="grid md:grid-cols-3 gap-4">
           {programs.map((program, i) => (
-            <div key={i} className="group relative bg-white/5 backdrop-blur-sm p-10 clip-panel transition-all duration-500 hover:-translate-y-2 border-l border-terracotta/20">
+            <div key={i} className="group relative bg-linen-cream p-10 clip-panel transition-all duration-500 hover:-translate-y-2 border-l border-terracotta/20 shadow-2xl">
               <div className="text-5xl font-playfair font-bold text-terracotta/10 mb-6 group-hover:text-terracotta/20 transition-colors">0{i+1}</div>
-              <h3 className="text-3xl font-playfair font-bold mb-4 text-linen-cream">{program.title}</h3>
-              <p className="text-linen-cream/70 mb-8 text-sm leading-relaxed">{program.desc}</p>
+              <h3 className="text-3xl font-playfair font-bold mb-4 text-sage-forest">{program.title}</h3>
+              <p className="text-sage-forest/70 mb-8 text-sm leading-relaxed">{program.desc}</p>
               <ul className="space-y-3">
                 {program.features.map((f, idx) => (
                   <li key={idx} className="flex items-center gap-3 text-xs font-bold uppercase tracking-wider text-terracotta">

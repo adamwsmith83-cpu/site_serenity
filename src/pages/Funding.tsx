@@ -124,11 +124,11 @@ export function Funding() {
                 ]
               }
             ].map((req, i) => (
-              <div key={i} className="bg-white/5 backdrop-blur-sm p-10 clip-panel border-l border-terracotta/20 text-linen-cream">
+              <div key={i} className="bg-linen-cream p-10 clip-panel border-l border-terracotta/20 text-sage-forest shadow-xl">
                 <h3 className="text-2xl font-playfair font-bold mb-6">{req.title}</h3>
                 <ul className="space-y-4">
                   {req.steps.map((step, si) => (
-                    <li key={si} className="flex items-start gap-3 text-sm text-linen-cream/70">
+                    <li key={si} className="flex items-start gap-3 text-sm text-sage-forest/70">
                       <div className="mt-1.5 w-1.5 h-1.5 bg-terracotta rounded-full flex-shrink-0" />
                       {step}
                     </li>
@@ -138,10 +138,10 @@ export function Funding() {
             ))}
           </div>
 
-          <div className="grid md:grid-cols-2 gap-20 bg-white/5 backdrop-blur-md p-12 md:p-20 clip-diagonal">
+          <div className="grid md:grid-cols-2 gap-20 bg-linen-cream p-12 md:p-20 clip-diagonal shadow-2xl">
             <div>
-              <h2 className="text-5xl font-playfair font-bold mb-8 text-linen-cream tracking-tight">Deal Details</h2>
-              <p className="text-linen-cream/70 mb-12 text-lg leading-relaxed font-dm-sans">
+              <h2 className="text-5xl font-playfair font-bold mb-8 text-sage-forest tracking-tight">Deal Details</h2>
+              <p className="text-sage-forest/70 mb-12 text-lg leading-relaxed font-dm-sans">
                 Submit your request with clarity. Our team reviews with unhurried precision, providing certainty in your capital partner.
               </p>
               <div className="space-y-8">
@@ -153,7 +153,7 @@ export function Funding() {
                     <div className="text-xs uppercase tracking-widest text-terracotta font-bold mb-1">Email Us</div>
                     <a 
                       href="mailto:loans@serenitylending.org" 
-                      className="text-xl font-playfair font-bold text-linen-cream hover:text-terracotta transition-colors"
+                      className="text-xl font-playfair font-bold text-sage-forest hover:text-terracotta transition-colors"
                     >
                       loans@serenitylending.org
                     </a>
@@ -165,21 +165,21 @@ export function Funding() {
                   </div>
                   <div>
                     <div className="text-xs uppercase tracking-widest text-terracotta font-bold mb-1">Call Us</div>
-                    <div className="text-xl font-playfair font-bold text-linen-cream">(555) 123-4567</div>
+                    <div className="text-xl font-playfair font-bold text-sage-forest">(555) 123-4567</div>
                   </div>
                 </div>
               </div>
             </div>
             
-            <div className="bg-white/10 backdrop-blur-xl p-10 shadow-2xl border-t-4 border-terracotta text-linen-cream">
-              <h2 className="text-3xl font-playfair font-bold mb-8 border-b border-white/10 pb-4">Funding Request</h2>
+            <div className="bg-white/40 backdrop-blur-xl p-10 shadow-2xl border-t-4 border-terracotta text-sage-forest">
+              <h2 className="text-3xl font-playfair font-bold mb-8 border-b border-black/10 pb-4">Funding Request</h2>
               <form onSubmit={handleFormSubmit} className="space-y-8">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <div className="relative group">
                     <label className="block text-xs font-bold uppercase tracking-widest text-terracotta mb-2">Full Name</label>
                     <input 
                       type="text" placeholder="Your Name" required
-                      className="w-full border-b border-white/20 py-3 text-lg outline-none focus:border-terracotta transition-colors bg-transparent font-dm-sans text-linen-cream"
+                      className="w-full border-b border-black/20 py-3 text-lg outline-none focus:border-terracotta transition-colors bg-transparent font-dm-sans text-sage-forest"
                       value={formData.name}
                       onChange={e => setFormData({...formData, name: e.target.value})}
                     />
@@ -188,7 +188,7 @@ export function Funding() {
                     <label className="block text-xs font-bold uppercase tracking-widest text-terracotta mb-2">Email Address</label>
                     <input 
                       type="email" placeholder="email@example.com" required
-                      className="w-full border-b border-white/20 py-3 text-lg outline-none focus:border-terracotta transition-colors bg-transparent font-dm-sans text-linen-cream"
+                      className="w-full border-b border-black/20 py-3 text-lg outline-none focus:border-terracotta transition-colors bg-transparent font-dm-sans text-sage-forest"
                       value={formData.email}
                       onChange={e => setFormData({...formData, email: e.target.value})}
                     />
@@ -196,26 +196,26 @@ export function Funding() {
                 </div>
 
                 <div className="mt-12">
-                  <h3 className="text-2xl font-playfair font-bold mb-6 border-b border-white/10 pb-2">Deal Details</h3>
+                  <h3 className="text-2xl font-playfair font-bold mb-6 border-b border-black/10 pb-2">Deal Details</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
                     <div>
                       <label className="block text-xs font-bold uppercase tracking-widest text-terracotta mb-3">Deal Type</label>
                       <select 
-                        className="w-full border-b border-white/20 py-3 text-sm outline-none focus:border-terracotta bg-transparent font-dm-sans text-linen-cream"
+                        className="w-full border-b border-black/20 py-3 text-sm outline-none focus:border-terracotta bg-transparent font-dm-sans text-sage-forest"
                         value={formData.loanType}
                         onChange={e => setFormData({...formData, loanType: e.target.value})}
                       >
-                        <option value="fix-and-flip" className="bg-black text-linen-cream">Private Money Funds</option>
-                        <option value="emd" className="bg-black text-linen-cream">Earnest Money Deposit (EMD)</option>
-                        <option value="double-close-same" className="bg-black text-linen-cream">Double Closing (same title company)</option>
-                        <option value="double-close-diff" className="bg-black text-linen-cream">Double Closing (different title company)</option>
+                        <option value="fix-and-flip" className="bg-linen-cream text-sage-forest">Private Money Funds</option>
+                        <option value="emd" className="bg-linen-cream text-sage-forest">Earnest Money Deposit (EMD)</option>
+                        <option value="double-close-same" className="bg-linen-cream text-sage-forest">Double Closing (same title company)</option>
+                        <option value="double-close-diff" className="bg-linen-cream text-sage-forest">Double Closing (different title company)</option>
                       </select>
                     </div>
                     <div>
                       <label className="block text-xs font-bold uppercase tracking-widest text-terracotta mb-3">Closing Date</label>
                       <input 
                         type="date" required
-                        className="w-full border-b border-white/20 py-3 text-sm outline-none focus:border-terracotta bg-transparent font-dm-sans text-linen-cream"
+                        className="w-full border-b border-black/20 py-3 text-sm outline-none focus:border-terracotta bg-transparent font-dm-sans text-sage-forest"
                         value={formData.closingDate}
                         onChange={e => setFormData({...formData, closingDate: e.target.value})}
                       />
@@ -224,17 +224,17 @@ export function Funding() {
 
                   <div className="mb-8">
                     <label className="block text-xs font-bold uppercase tracking-widest text-terracotta mb-3">Experience</label>
-                    <select className="w-full border-b border-white/20 py-3 text-sm outline-none focus:border-terracotta bg-transparent font-dm-sans text-linen-cream">
-                      <option className="bg-black text-linen-cream">No deals yet!</option>
-                      <option className="bg-black text-linen-cream">1-3 deals closed</option>
-                      <option className="bg-black text-linen-cream">4-6 deals closed</option>
-                      <option className="bg-black text-linen-cream">7+ deals closed</option>
+                    <select className="w-full border-b border-black/20 py-3 text-sm outline-none focus:border-terracotta bg-transparent font-dm-sans text-sage-forest">
+                      <option className="bg-linen-cream text-sage-forest">No deals yet!</option>
+                      <option className="bg-linen-cream text-sage-forest">1-3 deals closed</option>
+                      <option className="bg-linen-cream text-sage-forest">4-6 deals closed</option>
+                      <option className="bg-linen-cream text-sage-forest">7+ deals closed</option>
                     </select>
                   </div>
 
                   <textarea 
                     placeholder="Message / Deal Details" rows={4}
-                    className="w-full border border-white/10 p-4 text-sm outline-none focus:border-terracotta bg-white/5 resize-none font-dm-sans text-linen-cream mb-6"
+                    className="w-full border border-black/10 p-4 text-sm outline-none focus:border-terracotta bg-black/5 resize-none font-dm-sans text-sage-forest mb-6"
                     value={formData.message}
                     onChange={e => setFormData({...formData, message: e.target.value})}
                   ></textarea>
@@ -248,7 +248,7 @@ export function Funding() {
                       checked={formData.disclaimer}
                       onChange={e => setFormData({...formData, disclaimer: e.target.checked})}
                     />
-                    <label htmlFor="disclaimer" className="text-xs text-linen-cream/70 leading-relaxed cursor-pointer">
+                    <label htmlFor="disclaimer" className="text-xs text-sage-forest/70 leading-relaxed cursor-pointer">
                       I understand that submitting this request does not guarantee funding, and that I will abide by the agreed upon terms.
                     </label>
                   </div>
