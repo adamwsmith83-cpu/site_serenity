@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'motion/react';
+import { motion, useScroll, useTransform, useSpring } from 'motion/react';
 
 interface ParallaxSectionProps {
   children: React.ReactNode;
@@ -13,8 +13,16 @@ export function ParallaxSection({ children, className = "" }: ParallaxSectionPro
     offset: ["start end", "end start"]
   });
 
-  const y = useTransform(scrollYProgress, [0, 1], [50, -50]);
-  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
+  // Smooth the scroll progress for this section
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
+
+  // Reduced range from [50, -50] to [25, -25]
+  const y = useTransform(smoothProgress, [0, 1], [25, -25]);
+  const opacity = useTransform(smoothProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
 
   return (
     <section ref={ref} className={`relative min-h-screen flex items-center justify-center overflow-hidden z-10 mb-32 last:mb-0 ${className}`}>

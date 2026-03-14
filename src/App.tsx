@@ -5,7 +5,7 @@
 
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { motion, useScroll, useTransform } from 'motion/react';
+import { motion, useScroll, useTransform, useSpring } from 'motion/react';
 import { Navigation } from './components/layout/Navigation';
 import { Footer } from './components/layout/Footer';
 import { Home } from './pages/Home';
@@ -14,8 +14,15 @@ import { Funding } from './pages/Funding';
 export default function App() {
   const { scrollYProgress } = useScroll();
   
-  // Subtle parallax for the background
-  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
+  // Smooth the scroll progress to reduce "bounce" and jitter
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
+  
+  // Reduced parallax range from 15% to 8% for a more subtle effect, reversed direction
+  const backgroundY = useTransform(smoothProgress, [0, 1], ["0%", "-8%"]);
 
   const navLinks = [
     { name: 'Programs', href: '#programs' },
@@ -66,7 +73,7 @@ export default function App() {
             <img 
               src="/assets/overlay.svg" 
               alt="" 
-              className="w-full h-full object-cover opacity-30 pointer-events-none"
+              className="w-full h-full object-cover pointer-events-none"
               referrerPolicy="no-referrer"
               onError={(e) => {
                 e.currentTarget.style.display = 'none';

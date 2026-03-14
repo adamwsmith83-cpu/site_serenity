@@ -19,17 +19,17 @@ export function Navigation({ navLinks }: NavigationProps) {
   return (
     <nav className="fixed top-0 w-full bg-black/80 z-50 border-b border-white/10">
       <div className="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
-        <Link to="/" className="text-2xl font-playfair font-bold tracking-tight text-linen-cream flex items-center gap-3">
+        <Link to="/" className="text-3xl font-playfair font-bold tracking-tight text-linen-cream flex items-center gap-3">
           <img 
             src="/assets/serenity_icon.svg" 
             alt="Serenity Icon" 
-            className="w-8 h-8 rounded-lg object-cover"
+            className="w-10 h-10 rounded-lg object-cover"
             referrerPolicy="no-referrer"
           />
           Serenity Lending
         </Link>
         
-        <div className="hidden md:flex items-center gap-8 text-xs font-bold uppercase tracking-widest text-linen-cream/60">
+        <div className="hidden md:flex items-center gap-8 text-sm font-bold uppercase tracking-widest text-linen-cream/60">
           {navLinks.map((link) => (
             isHome ? (
               <a key={link.name} href={link.href} className="hover:text-terracotta transition-colors">

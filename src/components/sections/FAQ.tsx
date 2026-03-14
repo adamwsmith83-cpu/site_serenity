@@ -5,7 +5,7 @@ export function FAQ() {
   const faqs = [
     {
       q: "How much do you charge?",
-      a: "We charge 10% up-front return for EMD (up to 30 days) and 1.5% for double close funding up to $1M to start. These numbers can change depending on duration of the deal and risks involved. Seller finance funding starts at 2.5% for the added work."
+      a: "We charge 10% up-front return for EMD (up to 30 days) and 1.5% for double close funding up to $1M to start. Fix and Flip funding typically starts at 2 points and 10% interest. These numbers can change depending on duration of the deal and risks involved."
     },
     {
       q: "Are there any up-front fees?",
@@ -40,9 +40,9 @@ export function FAQ() {
   return (
     <ParallaxSection className="bg-transparent text-linen-cream">
       <div id="faq" className="max-w-4xl mx-auto">
-        <div className="mb-16">
-          <span className="font-instrument italic text-2xl text-terracotta block mb-4">Common Questions</span>
-          <h2 className="text-5xl font-playfair font-bold text-linen-cream">Clarity in the details.</h2>
+        <div className="bg-linen-cream p-10 md:p-12 clip-diagonal shadow-2xl mb-16">
+          <span className="font-instrument italic text-3xl text-terracotta block mb-4">Common Questions</span>
+          <h2 className="text-4xl font-playfair font-bold text-sage-forest">Clarity in the details.</h2>
         </div>
         
         <div className="grid md:grid-cols-2 gap-6">

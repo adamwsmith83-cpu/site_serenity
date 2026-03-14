@@ -4,14 +4,23 @@ import { ParallaxSection } from '../ui/ParallaxSection';
 export function Programs() {
   const programs = [
     { 
-      title: 'EMD / Double Close', 
-      desc: 'Transactional funding for earnest money or back-to-back closings. Wholesale friendly.',
-      features: ['Quick Funding', 'No credit check. No collateral.', 'Wholesale friendly']
+      title: 'EMD Funding', 
+      desc: 'Transactional funding for earnest money. Quick, reliable, and wholesale friendly.',
+      features: ['Quick Funding', 'No credit check', 'No collateral']
     },
     { 
       title: 'Double Close', 
+      desc: 'Back-to-back closings for wholesalers. We fund the A-B transaction.',
+      features: ['1.5% Flat Fee', 'Same-day funding', 'Wholesale Friendly']
+    },
+    { 
+      title: 'Fix and Flip', 
       desc: 'Short-term financing for purchase and renovation. Grounded in market reality.',
-      features: ['Quick funding', 'No credit check, no collateral', 'Wholesale Friendly']
+      features: [
+        'Let us fund your project from start to finish',
+        'EMD, Purchase, Gap and Rehab',
+        'Contact Us to get started on a quote'
+      ]
     },
     { 
       title: 'Other Creative Solutions', 
@@ -25,21 +34,21 @@ export function Programs() {
   return (
     <ParallaxSection className="bg-transparent text-linen-cream">
       <div id="programs" className="w-full">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
+        <div className="bg-linen-cream p-10 md:p-12 clip-diagonal shadow-2xl mb-8 flex flex-col md:flex-row justify-between items-end gap-8">
           <div className="max-w-xl">
-            <span className="font-instrument italic text-2xl text-terracotta block mb-4">Our Programs</span>
-            <h2 className="text-6xl font-playfair font-bold text-linen-cream leading-tight">
+            <span className="font-instrument italic text-3xl text-terracotta block mb-4">Our Programs</span>
+            <h2 className="text-5xl font-playfair font-bold text-sage-forest leading-tight">
               Structured for your success.
             </h2>
           </div>
-          <p className="text-linen-cream/60 max-w-xs text-sm leading-relaxed">
+          <p className="text-sage-forest/70 max-w-xs text-sm leading-relaxed">
             We've funded deals like yours a hundred times. Our process is built on speed, transparency, and unhurried precision.
           </p>
         </div>
         
-        <div className="grid md:grid-cols-3 gap-4">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
           {programs.map((program, i) => (
-            <div key={i} className="group relative bg-linen-cream p-10 clip-panel transition-all duration-500 hover:-translate-y-2 border-l border-terracotta/20 shadow-2xl">
+            <div key={i} className="group relative bg-linen-cream p-8 clip-panel transition-all duration-500 hover:-translate-y-2 border-l border-terracotta/20 shadow-2xl">
               <div className="text-5xl font-playfair font-bold text-terracotta/10 mb-6 group-hover:text-terracotta/20 transition-colors">0{i+1}</div>
               <h3 className="text-3xl font-playfair font-bold mb-4 text-sage-forest">{program.title}</h3>
               <p className="text-sage-forest/70 mb-8 text-sm leading-relaxed">{program.desc}</p>
