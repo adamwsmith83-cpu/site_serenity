@@ -29,22 +29,26 @@ export function Pricing() {
           <div className="h-px w-24 bg-terracotta mx-auto" />
         </div>
         
-        <div className="bg-linen-cream shadow-2xl overflow-hidden flex flex-col md:flex-row divide-y md:divide-y-0 md:divide-x divide-terracotta/10">
-          {pricingOptions.map((p, i) => (
-            <div key={i} className="flex-1 p-8 relative group hover:bg-terracotta/[0.02] transition-colors">
-              <div className="text-7xl font-playfair font-bold text-terracotta/5 absolute -top-6 -left-2">0{i+1}</div>
-              <h3 className="text-2xl font-playfair font-bold mb-4 text-sage-forest">{p.title}</h3>
-              <div className="text-4xl font-playfair font-bold text-terracotta mb-6">
-                <span className="text-xs uppercase tracking-widest block mb-1 opacity-60">Starting from</span>
-                {p.fee}
+        <div className="bg-linen-cream shadow-2xl overflow-hidden">
+          <div className="flex flex-col md:flex-row divide-y md:divide-y-0 md:divide-x divide-terracotta/10">
+            {pricingOptions.map((p, i) => (
+              <div key={i} className="flex-1 p-8 relative group hover:bg-terracotta/[0.02] transition-colors">
+                <div className="text-7xl font-playfair font-bold text-terracotta/5 absolute -top-6 -left-2">0{i+1}</div>
+                <h3 className="text-2xl font-playfair font-bold mb-4 text-sage-forest">{p.title}</h3>
+                <div className="text-4xl font-playfair font-bold text-terracotta mb-6">
+                  <span className="text-xs uppercase tracking-widest block mb-1 opacity-60">Starting from</span>
+                  {p.fee}
+                </div>
+                <p className="text-sage-forest/70 text-sm leading-relaxed mb-8">{p.desc}</p>
+                <div className="h-px w-full bg-terracotta/10" />
               </div>
-              <p className="text-sage-forest/70 text-sm leading-relaxed mb-8">{p.desc}</p>
-              <div className="h-px w-full bg-terracotta/10" />
-            </div>
-          ))}
-        </div>
-        <div className="mt-12 text-center">
-          <p className="text-linen-cream/40 text-xs italic">* all costs subject to change according to your specific deal.</p>
+            ))}
+          </div>
+          <div className="py-4 text-center border-t border-terracotta/5">
+            <p className="text-sage-forest/40 text-[10px] uppercase tracking-widest italic font-bold">
+              * all costs subject to change according to your specific deal.
+            </p>
+          </div>
         </div>
       </div>
     </ParallaxSection>

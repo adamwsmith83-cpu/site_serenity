@@ -1,21 +1,49 @@
 import React, { useState, useEffect } from 'react';
-import { Mail, Phone, CheckCircle2 } from 'lucide-react';
+import { Mail, CheckCircle2, Upload } from 'lucide-react';
 import { ParallaxSection } from '../components/ui/ParallaxSection';
 
 export function Funding() {
   const [formData, setFormData] = useState({
-    name: '',
+    fundingNeeded: '',
+    firstName: '',
+    lastName: '',
     email: '',
     phone: '',
-    loanType: 'fix-and-flip',
+    businessName: '',
+    address: '',
+    streetAddress: '',
+    city: '',
+    state: '',
+    postalCode: '',
+    amountNeeded: '',
     closingDate: '',
-    message: '',
+    titleCompany: '',
+    titleCompanyEmail: '',
+    escrowOfficerPhone: '',
+    howDidYouHear: '',
+    referralSource: 'Direct',
     disclaimer: false
+  });
+
+  const [files, setFiles] = useState<{
+    abContract: File | null;
+    bcContract: File | null;
+    addendums: File | null;
+  }>({
+    abContract: null,
+    bcContract: null,
+    addendums: null
   });
 
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof typeof files) => {
+    if (e.target.files && e.target.files[0]) {
+      setFiles(prev => ({ ...prev, [field]: e.target.files![0] }));
+    }
+  };
 
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,19 +54,38 @@ export function Funding() {
     setIsSubmitting(true);
     setError(null);
 
+    // Manual validation for required files
+    if (formData.fundingNeeded !== 'Fix and Flip' && !files.bcContract) {
+      setError('B-C Contract is required for this funding type.');
+      setIsSubmitting(false);
+      return;
+    }
+    if (!files.abContract) {
+      setError('A-B Contract is required.');
+      setIsSubmitting(false);
+      return;
+    }
+
     try {
       const formspreeId = import.meta.env.VITE_FORMSPREE_ID || 'mgonkapb';
       
+      const data = new FormData();
+      Object.entries(formData).forEach(([key, value]) => {
+        data.append(key, value.toString());
+      });
+
+      if (files.abContract) data.append('abContract', files.abContract);
+      if (files.bcContract) data.append('bcContract', files.bcContract);
+      if (files.addendums) data.append('addendums', files.addendums);
+
+      data.append('_subject', `New Funding Request from ${formData.firstName} ${formData.lastName}`);
+      
       const response = await fetch(`https://formspree.io/f/${formspreeId}`, {
           method: 'POST',
+          body: data,
           headers: {
-            'Content-Type': 'application/json',
             'Accept': 'application/json'
-          },
-          body: JSON.stringify({
-            ...formData,
-            _subject: `New Funding Request from ${formData.name}`
-          })
+          }
         });
 
         if (!response.ok) {
@@ -47,8 +94,9 @@ export function Funding() {
 
         setIsSubmitted(true);
         setFormData({
-          name: '', email: '', phone: '', loanType: 'fix-and-flip', closingDate: '', message: '', disclaimer: false
+          fundingNeeded: '', firstName: '', lastName: '', email: '', phone: '', businessName: '', address: '', streetAddress: '', city: '', state: '', postalCode: '', amountNeeded: '', closingDate: '', titleCompany: '', titleCompanyEmail: '', escrowOfficerPhone: '', howDidYouHear: '', referralSource: 'Direct', disclaimer: false
         });
+        setFiles({ abContract: null, bcContract: null, addendums: null });
       } catch (err) {
       setError(err instanceof Error ? err.message : 'An unexpected error occurred.');
     } finally {
@@ -159,33 +207,60 @@ export function Funding() {
                     </a>
                   </div>
                 </div>
-                <div className="flex items-center gap-6">
-                  <div className="w-14 h-14 bg-terracotta text-linen-cream flex items-center justify-center rounded-full">
-                    <Phone size={24} />
-                  </div>
-                  <div>
-                    <div className="text-xs uppercase tracking-widest text-terracotta font-bold mb-1">Call Us</div>
-                    <div className="text-xl font-playfair font-bold text-sage-forest">(555) 123-4567</div>
-                  </div>
-                </div>
               </div>
             </div>
             
             <div className="bg-white/40 backdrop-blur-xl p-10 shadow-2xl border-t-4 border-terracotta text-sage-forest">
               <h2 className="text-3xl font-playfair font-bold mb-8 border-b border-black/10 pb-4">Funding Request</h2>
               <form onSubmit={handleFormSubmit} className="space-y-8">
+                <div className="relative group">
+                  <label className="block text-xs font-bold uppercase tracking-widest text-terracotta mb-2">
+                    Funding Needed <span className="text-red-500">*</span>
+                  </label>
+                  <select 
+                    className="w-full border-b border-black/20 py-3 text-sm outline-none focus:border-terracotta bg-transparent font-dm-sans text-sage-forest"
+                    value={formData.fundingNeeded}
+                    onChange={e => setFormData({...formData, fundingNeeded: e.target.value})}
+                    required
+                  >
+                    <option value="" className="bg-linen-cream text-sage-forest">Select an option</option>
+                    <option value="EMD" className="bg-linen-cream text-sage-forest">EMD</option>
+                    <option value="Double-Close" className="bg-linen-cream text-sage-forest">Double-Close</option>
+                    <option value="Fix and Flip" className="bg-linen-cream text-sage-forest">Fix and Flip</option>
+                    <option value="Other" className="bg-linen-cream text-sage-forest">Other</option>
+                  </select>
+                </div>
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <div className="relative group">
-                    <label className="block text-xs font-bold uppercase tracking-widest text-terracotta mb-2">Full Name</label>
+                    <label className="block text-xs font-bold uppercase tracking-widest text-terracotta mb-2">
+                      First Name <span className="text-red-500">*</span>
+                    </label>
                     <input 
-                      type="text" placeholder="Your Name" required
+                      type="text" placeholder="First Name" required
                       className="w-full border-b border-black/20 py-3 text-lg outline-none focus:border-terracotta transition-colors bg-transparent font-dm-sans text-sage-forest"
-                      value={formData.name}
-                      onChange={e => setFormData({...formData, name: e.target.value})}
+                      value={formData.firstName}
+                      onChange={e => setFormData({...formData, firstName: e.target.value})}
                     />
                   </div>
                   <div className="relative group">
-                    <label className="block text-xs font-bold uppercase tracking-widest text-terracotta mb-2">Email Address</label>
+                    <label className="block text-xs font-bold uppercase tracking-widest text-terracotta mb-2">
+                      Last Name <span className="text-red-500">*</span>
+                    </label>
+                    <input 
+                      type="text" placeholder="Last Name" required
+                      className="w-full border-b border-black/20 py-3 text-lg outline-none focus:border-terracotta transition-colors bg-transparent font-dm-sans text-sage-forest"
+                      value={formData.lastName}
+                      onChange={e => setFormData({...formData, lastName: e.target.value})}
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div className="relative group">
+                    <label className="block text-xs font-bold uppercase tracking-widest text-terracotta mb-2">
+                      Email Address <span className="text-red-500">*</span>
+                    </label>
                     <input 
                       type="email" placeholder="email@example.com" required
                       className="w-full border-b border-black/20 py-3 text-lg outline-none focus:border-terracotta transition-colors bg-transparent font-dm-sans text-sage-forest"
@@ -193,26 +268,99 @@ export function Funding() {
                       onChange={e => setFormData({...formData, email: e.target.value})}
                     />
                   </div>
+                  <div className="relative group">
+                    <label className="block text-xs font-bold uppercase tracking-widest text-terracotta mb-2">
+                      Phone Number <span className="text-red-500">*</span>
+                    </label>
+                    <input 
+                      type="tel" placeholder="(555) 000-0000" required
+                      className="w-full border-b border-black/20 py-3 text-lg outline-none focus:border-terracotta transition-colors bg-transparent font-dm-sans text-sage-forest"
+                      value={formData.phone}
+                      onChange={e => setFormData({...formData, phone: e.target.value})}
+                    />
+                  </div>
+                </div>
+
+                <div className="relative group">
+                  <label className="block text-xs font-bold uppercase tracking-widest text-terracotta mb-2">Business Name (If Applicable)</label>
+                  <input 
+                    type="text" placeholder="Your Company LLC"
+                    className="w-full border-b border-black/20 py-3 text-lg outline-none focus:border-terracotta transition-colors bg-transparent font-dm-sans text-sage-forest"
+                    value={formData.businessName}
+                    onChange={e => setFormData({...formData, businessName: e.target.value})}
+                  />
+                </div>
+
+                <div className="mt-12">
+                  <h3 className="text-2xl font-playfair font-bold mb-6 border-b border-black/10 pb-2">Property Information</h3>
+                  <div className="space-y-8">
+                    <div className="relative group">
+                      <label className="block text-xs font-bold uppercase tracking-widest text-terracotta mb-2">
+                        Street Address <span className="text-red-500">*</span>
+                      </label>
+                      <input 
+                        type="text" placeholder="123 Main St" required
+                        className="w-full border-b border-black/20 py-3 text-lg outline-none focus:border-terracotta transition-colors bg-transparent font-dm-sans text-sage-forest"
+                        value={formData.streetAddress}
+                        onChange={e => setFormData({...formData, streetAddress: e.target.value})}
+                      />
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                      <div className="relative group">
+                        <label className="block text-xs font-bold uppercase tracking-widest text-terracotta mb-2">
+                          City <span className="text-red-500">*</span>
+                        </label>
+                        <input 
+                          type="text" placeholder="City" required
+                          className="w-full border-b border-black/20 py-3 text-lg outline-none focus:border-terracotta transition-colors bg-transparent font-dm-sans text-sage-forest"
+                          value={formData.city}
+                          onChange={e => setFormData({...formData, city: e.target.value})}
+                        />
+                      </div>
+                      <div className="relative group">
+                        <label className="block text-xs font-bold uppercase tracking-widest text-terracotta mb-2">
+                          State <span className="text-red-500">*</span>
+                        </label>
+                        <input 
+                          type="text" placeholder="State" required
+                          className="w-full border-b border-black/20 py-3 text-lg outline-none focus:border-terracotta transition-colors bg-transparent font-dm-sans text-sage-forest"
+                          value={formData.state}
+                          onChange={e => setFormData({...formData, state: e.target.value})}
+                        />
+                      </div>
+                      <div className="relative group">
+                        <label className="block text-xs font-bold uppercase tracking-widest text-terracotta mb-2">
+                          Postal Code <span className="text-red-500">*</span>
+                        </label>
+                        <input 
+                          type="text" placeholder="Zip" required
+                          className="w-full border-b border-black/20 py-3 text-lg outline-none focus:border-terracotta transition-colors bg-transparent font-dm-sans text-sage-forest"
+                          value={formData.postalCode}
+                          onChange={e => setFormData({...formData, postalCode: e.target.value})}
+                        />
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
                 <div className="mt-12">
                   <h3 className="text-2xl font-playfair font-bold mb-6 border-b border-black/10 pb-2">Deal Details</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
                     <div>
-                      <label className="block text-xs font-bold uppercase tracking-widest text-terracotta mb-3">Deal Type</label>
-                      <select 
+                      <label className="block text-xs font-bold uppercase tracking-widest text-terracotta mb-3">
+                        Amount Needed <span className="text-red-500">*</span>
+                      </label>
+                      <input 
+                        type="text" placeholder="$0.00" required
                         className="w-full border-b border-black/20 py-3 text-sm outline-none focus:border-terracotta bg-transparent font-dm-sans text-sage-forest"
-                        value={formData.loanType}
-                        onChange={e => setFormData({...formData, loanType: e.target.value})}
-                      >
-                        <option value="fix-and-flip" className="bg-linen-cream text-sage-forest">Private Money Funds</option>
-                        <option value="emd" className="bg-linen-cream text-sage-forest">Earnest Money Deposit (EMD)</option>
-                        <option value="double-close-same" className="bg-linen-cream text-sage-forest">Double Closing (same title company)</option>
-                        <option value="double-close-diff" className="bg-linen-cream text-sage-forest">Double Closing (different title company)</option>
-                      </select>
+                        value={formData.amountNeeded}
+                        onChange={e => setFormData({...formData, amountNeeded: e.target.value})}
+                      />
                     </div>
                     <div>
-                      <label className="block text-xs font-bold uppercase tracking-widest text-terracotta mb-3">Closing Date</label>
+                      <label className="block text-xs font-bold uppercase tracking-widest text-terracotta mb-3">
+                        Closing Date <span className="text-red-500">*</span>
+                      </label>
                       <input 
                         type="date" required
                         className="w-full border-b border-black/20 py-3 text-sm outline-none focus:border-terracotta bg-transparent font-dm-sans text-sage-forest"
@@ -222,22 +370,93 @@ export function Funding() {
                     </div>
                   </div>
 
+                  <div className="space-y-8 mb-8">
+                    <div className="relative group">
+                      <label className="block text-xs font-bold uppercase tracking-widest text-terracotta mb-2">
+                        Title Company <span className="text-red-500">*</span>
+                      </label>
+                      <input 
+                        type="text" placeholder="Company Name" required
+                        className="w-full border-b border-black/20 py-3 text-lg outline-none focus:border-terracotta transition-colors bg-transparent font-dm-sans text-sage-forest"
+                        value={formData.titleCompany}
+                        onChange={e => setFormData({...formData, titleCompany: e.target.value})}
+                      />
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                      <div className="relative group">
+                        <label className="block text-xs font-bold uppercase tracking-widest text-terracotta mb-2">
+                          Title Company Email <span className="text-red-500">*</span>
+                        </label>
+                        <input 
+                          type="email" placeholder="title@example.com" required
+                          className="w-full border-b border-black/20 py-3 text-lg outline-none focus:border-terracotta transition-colors bg-transparent font-dm-sans text-sage-forest"
+                          value={formData.titleCompanyEmail}
+                          onChange={e => setFormData({...formData, titleCompanyEmail: e.target.value})}
+                        />
+                      </div>
+                      <div className="relative group">
+                        <label className="block text-xs font-bold uppercase tracking-widest text-terracotta mb-2">
+                          Escrow Officer Phone <span className="text-red-500">*</span>
+                        </label>
+                        <input 
+                          type="tel" placeholder="(555) 000-0000" required
+                          className="w-full border-b border-black/20 py-3 text-lg outline-none focus:border-terracotta transition-colors bg-transparent font-dm-sans text-sage-forest"
+                          value={formData.escrowOfficerPhone}
+                          onChange={e => setFormData({...formData, escrowOfficerPhone: e.target.value})}
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="space-y-6 mb-12">
+                    <h4 className="text-xs font-bold uppercase tracking-widest text-terracotta mb-4">Required Documents</h4>
+                    
+                    <div className="space-y-4">
+                      {[
+                        { label: 'A-B Contract', field: 'abContract', required: true },
+                        { label: 'B-C Contract', field: 'bcContract', required: formData.fundingNeeded !== 'Fix and Flip' },
+                        { label: 'Addendums (If Any)', field: 'addendums', required: false }
+                      ].map((file) => (
+                        <div key={file.field} className="relative">
+                          <label className="block text-[10px] uppercase tracking-widest text-sage-forest/50 mb-2">
+                            {file.label} {file.required && <span className="text-red-500">*</span>}
+                          </label>
+                          <div className="flex items-center gap-4 p-4 border border-black/10 bg-black/5 rounded-lg group hover:border-terracotta transition-colors cursor-pointer relative">
+                            <Upload size={18} className="text-terracotta" />
+                            <span className="text-xs font-dm-sans text-sage-forest/70 truncate">
+                              {files[file.field as keyof typeof files]?.name || 'Click to upload file'}
+                            </span>
+                            <input 
+                              type="file" 
+                              className="absolute inset-0 opacity-0 cursor-pointer"
+                              required={file.required}
+                              onChange={(e) => handleFileChange(e, file.field as keyof typeof files)}
+                            />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
                   <div className="mb-8">
-                    <label className="block text-xs font-bold uppercase tracking-widest text-terracotta mb-3">Experience</label>
-                    <select className="w-full border-b border-black/20 py-3 text-sm outline-none focus:border-terracotta bg-transparent font-dm-sans text-sage-forest">
-                      <option className="bg-linen-cream text-sage-forest">No deals yet!</option>
-                      <option className="bg-linen-cream text-sage-forest">1-3 deals closed</option>
-                      <option className="bg-linen-cream text-sage-forest">4-6 deals closed</option>
-                      <option className="bg-linen-cream text-sage-forest">7+ deals closed</option>
+                    <label className="block text-xs font-bold uppercase tracking-widest text-terracotta mb-3">
+                      How did you hear about us? <span className="text-red-500">*</span>
+                    </label>
+                    <select 
+                      className="w-full border-b border-black/20 py-3 text-sm outline-none focus:border-terracotta bg-transparent font-dm-sans text-sage-forest"
+                      value={formData.howDidYouHear}
+                      onChange={e => setFormData({...formData, howDidYouHear: e.target.value})}
+                      required
+                    >
+                      <option value="" className="bg-linen-cream text-sage-forest">Select an option</option>
+                      <option value="Google" className="bg-linen-cream text-sage-forest">Google Search</option>
+                      <option value="Social Media" className="bg-linen-cream text-sage-forest">Social Media</option>
+                      <option value="Referral" className="bg-linen-cream text-sage-forest">Referral</option>
+                      <option value="Other" className="bg-linen-cream text-sage-forest">Other</option>
                     </select>
                   </div>
 
-                  <textarea 
-                    placeholder="Message / Deal Details" rows={4}
-                    className="w-full border border-black/10 p-4 text-sm outline-none focus:border-terracotta bg-black/5 resize-none font-dm-sans text-sage-forest mb-6"
-                    value={formData.message}
-                    onChange={e => setFormData({...formData, message: e.target.value})}
-                  ></textarea>
+                  <input type="hidden" name="referralSource" value={formData.referralSource} />
 
                   <div className="flex items-start gap-3 mb-8">
                     <input 
@@ -252,10 +471,6 @@ export function Funding() {
                       I understand that submitting this request does not guarantee funding, and that I will abide by the agreed upon terms.
                     </label>
                   </div>
-                </div>
-
-                <div className="flex items-center gap-2 text-[10px] uppercase tracking-widest text-terracotta font-bold mb-2">
-                  <CheckCircle2 size={10} /> Secure Submission via Serenity Protocol
                 </div>
 
                 {error && (
