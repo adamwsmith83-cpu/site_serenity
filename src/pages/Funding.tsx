@@ -186,14 +186,14 @@ export function Funding() {
             ))}
           </div>
 
-          <div className="grid md:grid-cols-2 gap-20 bg-linen-cream p-12 md:p-20 clip-diagonal shadow-2xl">
-            <div>
+          <div className="flex flex-col gap-16 bg-linen-cream p-12 md:p-20 clip-diagonal shadow-2xl">
+            <div className="max-w-3xl mx-auto text-center">
               <h2 className="text-5xl font-playfair font-bold mb-8 text-sage-forest tracking-tight">Deal Details</h2>
               <p className="text-sage-forest/70 mb-12 text-lg leading-relaxed font-dm-sans">
                 Submit your request with clarity. Our team reviews with unhurried precision, providing certainty in your capital partner.
               </p>
-              <div className="space-y-8">
-                <div className="flex items-center gap-6">
+              <div className="flex justify-center">
+                <div className="flex items-center gap-6 text-left">
                   <div className="w-14 h-14 bg-terracotta text-linen-cream flex items-center justify-center rounded-full">
                     <Mail size={24} />
                   </div>
@@ -210,7 +210,7 @@ export function Funding() {
               </div>
             </div>
             
-            <div className="bg-white/40 backdrop-blur-xl p-10 shadow-2xl border-t-4 border-terracotta text-sage-forest">
+            <div className="max-w-4xl mx-auto w-full bg-white/40 backdrop-blur-xl p-10 shadow-2xl border-t-4 border-terracotta text-sage-forest">
               <h2 className="text-3xl font-playfair font-bold mb-8 border-b border-black/10 pb-4">Funding Request</h2>
               <form onSubmit={handleFormSubmit} className="space-y-8">
                 <div className="relative group">
